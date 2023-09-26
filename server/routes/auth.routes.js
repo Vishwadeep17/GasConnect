@@ -1,23 +1,20 @@
-const { verifySignUp } = require("../middlewares");
-const controller = require("../controllers/authController");
+// server/routes/auth.routes.js
 
-module.exports = function(app) {
-  app.use(function(req, res, next) {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "x-access-token, Origin, Content-Type, Accept"
-    );
-    next();
-  });
+const express = require('express');
+const router = express.Router();
+const AuthController = require('../controllers/auth.controller');
+const { verifyToken, isAdmin } = require('../middleware/auth.middleware');
 
-  app.post(
-    "/api/auth/signup",
-    [
-      verifySignUp.checkDuplicateUsernameOrEmail,
-      verifySignUp.checkRolesExisted
-    ],
-    controller.signup
-  );
+// User registration
+router.post('/register', AuthController.register);
 
-  app.post("/api/auth/signin", controller.signin);
-};
+// User login
+router.post('/login', AuthController.login);
+
+// Example of a protected route (requires authentication)
+router.get('/profile', verifyToken, AuthController.getProfile);
+
+// Example of an admin-only route
+router.get('/admin', verifyToken, isAdmin, AuthController.adminRoute);
+
+module.exports = router;

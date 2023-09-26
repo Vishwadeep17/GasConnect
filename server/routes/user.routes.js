@@ -10,19 +10,27 @@ module.exports = function(app) {
     next();
   });
 
-  app.get("/api/test/all", controller.allAccess);
+  app.get("/api/test/all", (req, res) => {
+    controller.allAccess(req, res);
+  });
 
-  app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
+  app.get("/api/test/user", [authJwt.verifyToken], (req, res) => {
+    controller.userBoard(req, res);
+  });
 
   app.get(
     "/api/test/supp",
     [authJwt.verifyToken, authJwt.isModerator],
-    controller.supplierBoard
+    (req, res) => {
+      controller.supplierBoard(req, res);
+    }
   );
 
   app.get(
     "/api/test/admin",
     [authJwt.verifyToken, authJwt.isAdmin],
-    controller.adminBoard
+    (req, res) => {
+      controller.adminBoard(req, res);
+    }
   );
 };
