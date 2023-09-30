@@ -32,25 +32,29 @@ db.mongoose
     process.exit();
   });
 
-  async function initial() {
-    try {
-      const count = await Role.estimatedDocumentCount();
-      if (count === 0) {
-        await Promise.all([
-          new Role({ name: "user" }).save(),
-          new Role({ name: "supplier" }).save(),
-          new Role({ name: "admin" }).save()
-        ]);
-      }
-      console.log("Roles added to the roles collection");
-    } catch (err) {
-      console.error("Error initializing roles:", err);
+async function initial() {
+  try {
+    const count = await Role.estimatedDocumentCount();
+    if (count === 0) {
+      await Promise.all([
+        new Role({ name: "user" }).save(),
+        new Role({ name: "supplier" }).save(),
+        new Role({ name: "admin" }).save()
+      ]);
     }
+    console.log("Roles added to the roles collection");
+  } catch (err) {
+    console.error("Error initializing roles:", err);
   }
-  
+}
 
-require('./routes/auth.routes')(app);
-require('./routes/user.routes')(app);
+// Import your route files correctly as Router objects
+const authRoutes = require('./routes/auth.routes');
+const userRoutes = require('./routes/user.routes');
+
+// Use your route objects with app.use
+app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

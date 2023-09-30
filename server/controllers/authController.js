@@ -3,18 +3,18 @@ const db = require("../models");
 const User = db.user;
 const Role = db.role;
 
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 exports.signup = async (req, res) => {
-  const { username, email, password } = req.body;
-
-  // Validate that password is a non-empty string
-  if (typeof password !== 'string' || password.trim() === '') {
-    return res.status(400).json({ message: 'Password is required.' });
-  }
-
   try {
+    const { username, email, password } = req.body;
+
+    // Validate that password is a non-empty string
+    if (typeof password !== 'string' || password.trim() === '') {
+      return res.status(400).json({ message: 'Password is required.' });
+    }
+
     // Hash the password
     const hashedPassword = bcrypt.hashSync(password, 8);
 
@@ -80,5 +80,27 @@ exports.signin = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({ message: err });
+    });
+};
+
+// Placeholder adminRoute function
+exports.adminRoute = (req, res) => {
+  User.findById(req.userId)
+    .populate("roles", "-__v")
+    .exec((err, user) => {
+      if (err) {
+        return res.status(500).send({ message: err });
+      }
+
+      // Check if the user has the "admin" role
+      for (let i = 0; i < user.roles.length; i++) {
+        if (user.roles[i].name === "admin") {
+          // If the user has the "admin" role, you can add your admin-specific logic here
+          return res.status(200).json({ message: "Admin route logic goes here." });
+        }
+      }
+
+      // If the user does not have the "admin" role, return a 403 Forbidden response
+      return res.status(403).send({ message: "Require Admin Role!" });
     });
 };

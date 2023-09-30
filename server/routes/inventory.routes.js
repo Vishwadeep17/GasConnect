@@ -1,9 +1,7 @@
-// server/routes/inventory.routes.js
-
 const express = require('express');
 const router = express.Router();
 const InventoryController = require('../controllers/inventoryController');
-const { verifyToken, isAdmin } = require('../middleware/auth.middleware');
+const { verifyToken, isAdmin } = require('../middlewares/authJwt');
 
 // Add a new item to the inventory (admin only)
 router.post('/', verifyToken, isAdmin, InventoryController.addInventoryItem);

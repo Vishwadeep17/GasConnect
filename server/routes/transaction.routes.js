@@ -1,9 +1,7 @@
-// server/routes/transaction.routes.js
-
 const express = require('express');
 const router = express.Router();
 const TransactionController = require('../controllers/transactionController');
-const { verifyToken, isAdmin } = require('../middleware/auth.middleware');
+const { verifyToken, isAdmin } = require('../middlewares/authJwt');
 
 // Record a payment transaction (e.g., for orders)
 router.post('/record-payment', verifyToken, TransactionController.recordPayment);

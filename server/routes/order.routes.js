@@ -1,9 +1,7 @@
-// server/routes/order.routes.js
-
 const express = require('express');
 const router = express.Router();
 const GasOrderController = require('../controllers/gasOrderController');
-const { verifyToken, isAdmin } = require('../middleware/auth.middleware');
+const { verifyToken, isAdmin } = require('../middlewares/authJwt');
 
 // Create a new gas order
 router.post('/', verifyToken, GasOrderController.createGasOrder);
