@@ -1,7 +1,7 @@
 const db = require("../models");
 const User = db.user;
 
-exports.getUserProfile = async (req, res) => {
+const getUserProfile = async (req, res) => {
   try {
     // Get user profile, including role information
     const user = await User.findById(req.userId).populate("roles", "-__v");
@@ -22,3 +22,4 @@ exports.getUserProfile = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
+module.exports = {getUserProfile}
