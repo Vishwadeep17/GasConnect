@@ -1,23 +1,23 @@
-const React = require('react');
-const { useEffect, useState } = require('react');
-const GoogleMapReact = require('google-map-react');
-const Marker = require('./Marker');
+import React, { useEffect, useState } from "react";
+import GoogleMapReact from 'google-map-react';
+import Marker from "./Marker";
 
-function SimpleMap({ pointer, setPointer, disable = false }) {
-  const getLocation = () => {
+export default function SimpleMap({pointer,setPointer,disable=false}){
+  const getLocation = () =>{
+    
     if (navigator.geolocation && !disable) {
-      navigator.geolocation.watchPosition(function (position) {
+      navigator.geolocation.watchPosition(function(position) {
         setPointer({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        });
+          lat : position.coords.latitude,
+          lng : position.coords.longitude
+        })
       });
     }
   }
 
-  useEffect(() => {
-    getLocation()
-  }, []);
+  useEffect(()=>{
+      getLocation()
+  },[])
 
   return (
     // Important! Always set the container height explicitly
@@ -30,12 +30,12 @@ function SimpleMap({ pointer, setPointer, disable = false }) {
         }}
         center={pointer}
         zoom={10}
-        onClick={!disable ? (e) => {
+        onClick={!disable?(e)=>{
           setPointer({
-            lat: e.lat,
-            lng: e.lng
+            lat : e.lat,
+            lng : e.lng
           })
-        } : null}
+        }:null}
       >
         <Marker
           lat={pointer.lat}
@@ -45,5 +45,3 @@ function SimpleMap({ pointer, setPointer, disable = false }) {
     </div>
   );
 }
-
-module.exports = SimpleMap;

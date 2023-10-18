@@ -1,5 +1,5 @@
-const axios = require('axios');
-const authHeader = require('./auth-header');
+import axios from 'axios';
+import authHeader from './auth-header';
 
 const API_URL = 'localhost:5000/user/login';
 
@@ -21,4 +21,4 @@ class UserService {
   }
 }
 
-module.exports = new UserService();
+export default UserService();

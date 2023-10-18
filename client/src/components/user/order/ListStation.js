@@ -1,12 +1,11 @@
-const React = require('react');
-const { useState } = require('react');
-const SimpleMap = require('../../map/Simple');
-const PreviewModal = require('../../modal/PreviewModal');
-const { getDistance } = require('geolib');
-const { Navigate, useNavigate } = require('react-router-dom');
+import { useState } from "react";
+import SimpleMap from "../../map/Simple";
+import PreviewModal from "../../modal/PreviewModal";
+import { getDistance } from "geolib";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function ListStation({ station }) {
-  const { location, name, quantity, distance } = station;
+  const { location, name, quantity,distance } = station;
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   return (
@@ -25,25 +24,24 @@ function ListStation({ station }) {
           Volume : {quantity.diesel.quantity}ltr
         </p>
         <p className="text-grey-dark font-thin text-sm leading-normal text-white">
-          Distance : {distance} KM
+              Distance : {distance} KM
         </p>
-        <button className="bg-transparent hover:bg-[#fe6f2b] border-[#fe6f2b] font-bold text-white py-1  border  hover:border-transparent rounded" onClick={() => {
-          setShowModal(true);
+        <button className="bg-transparent hover:bg-[#fe6f2b] border-[#fe6f2b] font-bold text-white py-1  border  hover:border-transparent rounded" onClick={()=>{
+            setShowModal(true)
         }}>
           View
         </button>
         {
-          showModal ?
+            showModal?
             <PreviewModal content={station} setOnCancel={setShowModal} setOnSubmit={
-              (id) => {
-                navigate(`/user/bookOrder/${id}`);
+              (id)=>{
+                navigate(`/user/bookOrder/${id}`)
               }
             }/>
-            : null
+            :null
         }
       </div>
     </div>
   );
 }
-
-module.exports = ListStation;
+export default ListStation;

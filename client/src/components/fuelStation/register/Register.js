@@ -1,19 +1,18 @@
-const { useEffect, useState } = require("react");
-const LoginLight = require("../../../assets/images/loginLight.jpg");
-const {
+import { useEffect, useState } from "react";
+import LoginLight from "../../../assets/images/loginLight.jpg";
+import {
   AiOutlineMail,
   AiOutlineEyeInvisible,
   AiOutlineEye,
   AiOutlineLock,
   AiOutlineMobile,
-} = require("react-icons/ai");
-const { useNavigate } = require("react-router-dom");
-const AuthService = require("../../../services/auth.service");
-const { IoPersonOutline } = require("react-icons/io5");
-const { BiMapAlt } = require("react-icons/bi");
-const Modal = require("../../modal/Modal");
-const authService = require("../../../services/auth.service");
-
+} from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import AuthService from "../../../services/auth.service";
+import { IoPersonOutline } from "react-icons/io5";
+import { BiMapAlt } from "react-icons/bi";
+import Modal from "../../modal/Modal";
+import authService from "../../../services/auth.service";
 function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showconfirmPassword, setShowConfirmPassword] = useState(false);
@@ -26,7 +25,6 @@ function Register() {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const fuelUser = AuthService.getCurrentFuelStation();
-
   const onHandleSignup = async (e) => {
     e.preventDefault();
     try {
@@ -49,13 +47,13 @@ function Register() {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  useEffect(() => {
-    if (fuelUser) {
-      navigate('/seller/');
+  useEffect(()=>{
+    if(fuelUser){
+        navigate('/seller/')
     }
-  }, [fuelUser]);
+  },[fuelUser])
 
   return (
     <>
@@ -161,7 +159,7 @@ function Register() {
         <div className="md:flex md:items-center mb-6">
           <div className="md:w-1/3">
             <label
-              className="block text-white font-bold md:text-right mb-1 md:mb-0 pr-4"
+              className="block  text-white font-bold md:text-right mb-1 md:mb-0 pr-4"
               for="inline-password"
             >
               Password
@@ -229,17 +227,18 @@ function Register() {
           </div>
         </div>
         <div className="actions w-full flex flex-col gap-4">
-          <button
-            className="bg-[#fe6f2b] hover-bg-[#F59337] text-white font-bold py-2 px-4 rounded-full"
+          <button 
+          className="bg-[#fe6f2b] hover:bg-[#F59337] text-white font-bold py-2 px-4 rounded-full"
           >
             Sign Up
           </button>
-          <button
-            className="bg-transparent border border-[#fe6f2b] hover-bg-[#F59337] text-white font-bold py-2 px-4 rounded-full"
-            onClick={((e) => {
-              e.preventDefault();
-              navigate('../login');
-            })}
+          <button 
+          className="bg-transparent border border-[#fe6f2b] hover:bg-[#F59337] text-white font-bold py-2 px-4 rounded-full"
+           
+           onClick={((e)=>{
+                e.preventDefault();
+                navigate('../login')
+              })}
           >
             Login
           </button>
@@ -248,5 +247,4 @@ function Register() {
     </>
   );
 }
-
-module.exports = Register;
+export default Register;
