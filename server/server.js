@@ -1,63 +1,37 @@
 const express = require("express");
 const cors = require("cors");
+const dotenv = require("dotenv");
+const userRoute = require("./routes/userRoute.js");
+const orderRoute = require("./routes/orderRoute.js");
+const gasRoute = require("./routes/gasStationRoute.js");
+const paymentRoute = require("./routes/paymentRoute.js");
 
-const app = express();
+// const quantityRoute = require("./routes/quantityRoute.js");
+const { dbconnect } = require("./database/dbconnection.js");
 
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
 
-app.use(cors(corsOptions));
-
-// parse requests of content-type - application/json
+const app=express();
+app.use(cors());
 app.use(express.json());
+dotenv.config();
+dbconnect();
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+    res.setHeader('Accesc-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin,X-Requested-With,Content-Type,Accept ,Authorization');
+    res.setHeader('Access-Control_Allow-Methods', 'GET,POST,PATCH,DELETE');
+    next();
+})
 
-const db = require("./models");
-const Role = db.role;
+app.use('/user',userRoute);
+app.use('/order',orderRoute);
+app.use('/fuel',gasRoute);
+app.use('/payment',paymentRoute);
 
-db.mongoose
-  .connect(`mongodb://localhost:27017/GasConnect`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log("Successfully connect to MongoDB.");
-    initial();
-  })
-  .catch(err => {
-    console.error("Connection error", err);
-    process.exit();
-  });
+//app.use('/quantity', quantityRoute)
 
-async function initial() {
-  try {
-    const count = await Role.estimatedDocumentCount();
-    if (count === 0) {
-      await Promise.all([
-        new Role({ name: "user" }).save(),
-        new Role({ name: "supplier" }).save(),
-        new Role({ name: "admin" }).save()
-      ]);
-    }
-    console.log("Roles added to the roles collection");
-  } catch (err) {
-    console.error("Error initializing roles:", err);
-  }
-}
+const PORT=process.env.PORT || 5001;
 
-// Import your route files correctly as Router objects
-const authRoutes = require('./routes/auth.routes');
-const userRoutes = require('./routes/user.routes');
-
-// Use your route objects with app.use
-app.use('/api/auth', authRoutes);
-app.use('/api/user', userRoutes);
-
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+app.listen(PORT, (req, res) => {
+    console.log(`Server started on port:${PORT}`)
+})
