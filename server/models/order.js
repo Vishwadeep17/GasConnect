@@ -1,4 +1,6 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+
+
 
 const orderSchema = mongoose.Schema({
     address: {
@@ -15,6 +17,7 @@ const orderSchema = mongoose.Schema({
             quantity: { type: Number }
         }
     },
+
     method: {
         cash: { type: Number },
         online: {
@@ -24,19 +27,22 @@ const orderSchema = mongoose.Schema({
             status: {
                 type: String
             },
-            amount: {
-                type: Number
+            amount:{
+                type : Number
             }
         }
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
+       
     },
     stationId: {
         type: mongoose.Schema.Types.ObjectId,
+        
+
     },
     isCanceled: {
-        status: { type: Boolean }
+       status:{type:Boolean}      
     },
     isAccepted: {
         status: { type: Boolean }
@@ -44,7 +50,11 @@ const orderSchema = mongoose.Schema({
     isDelivered: {
         status: { type: Boolean },
         message: { type: String }
-    }
-});
 
-module.exports = mongoose.model('Order', orderSchema);
+    },
+
+
+
+})
+
+export default mongoose.model("Order", orderSchema)

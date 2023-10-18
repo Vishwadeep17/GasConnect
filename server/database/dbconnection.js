@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-exports.dbconnect = async () => {
+export const dbconnect = async () => {
     mongoose.connect("mongodb://localhost:27017/GasConnect", { useNewUrlParser: true })
         .then(() => console.log("Mongodb started"))
         .catch((err) => console.log(err));

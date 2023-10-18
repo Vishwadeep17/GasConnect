@@ -1,14 +1,13 @@
-const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const userRoute = require("./routes/userRoute.js");
-const orderRoute = require("./routes/orderRoute.js");
-const gasRoute = require("./routes/gasStationRoute.js");
-const paymentRoute = require("./routes/paymentRoute.js");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import userRoute from "./routes/userRoute.js";
+import orderRoute from "./routes/orderRoute.js";
+import fuelRoute from "./routes/fuelStationRoute.js";
+import paymentRoute from "./routes/paymentRoute.js";
 
-// const quantityRoute = require("./routes/quantityRoute.js");
-const { dbconnect } = require("./database/dbconnection.js");
-
+//import quantityRoute from "./routes/quantityRoute.js"
+import { dbconnect } from "./database/dbconnection.js";
 
 const app=express();
 app.use(cors());
@@ -25,7 +24,7 @@ app.use((req, res, next) => {
 
 app.use('/user',userRoute);
 app.use('/order',orderRoute);
-app.use('/fuel',gasRoute);
+app.use('/fuel',fuelRoute);
 app.use('/payment',paymentRoute);
 
 //app.use('/quantity', quantityRoute)
