@@ -1,46 +1,47 @@
-import Card from "./Card";
-import LoginLight from "../../../assets/images/loginLight.jpg";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import authService from "../../../services/auth.service";
-import { toast } from "react-toastify";
+const Card = require("./Card");
+const LoginLight = require("../../../assets/images/loginLight.jpg");
+const { useEffect, useState } = require("react");
+const { useNavigate } = require("react-router-dom");
+const authService = require("../../../services/auth.service");
+const { toast } = require("react-toastify");
 
-function UpdateProfile(){
-  const [oldPassword,setOldPassword] = useState("");
-  const [newPassword,setNewPassword] = useState("");
-  const [confirmPassowrd,setConfirmPassword] = useState("");
+function UpdateProfile() {
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassowrd, setConfirmPassword] = useState("");
   const navigate = useNavigate();
-  
+
   const fuelStation = authService.getCurrentFuelStation();
-  
-  useEffect(()=>{
-    if(!fuelStation){
-      navigate('/seller/auth/login')
+
+  useEffect(() => {
+    if (!fuelStation) {
+      navigate('/seller/auth/login');
     }
-  },[])
+  }, []);
 
-
-  const onHandleSubmit =  async (e) =>{
+  const onHandleSubmit = async (e) => {
     e.preventDefault();
-    if(newPassword !== confirmPassowrd){
-        toast.error("Password and Confirm Password not matching")
-        return
+    if (newPassword !== confirmPassowrd) {
+      toast.error("Password and Confirm Password not matching");
+      return;
     }
     try {
-      await authService.updateSellerProfilePassword(fuelStation.stationId,oldPassword,newPassword).then(
-        (response) => {
-           toast.success(response.data.message)
-           navigate("../logout");
-        },
-        (error) => {
-          console.log(error)
-          toast.error(error.response.data.message);
-        }
-      );
+      authService.updateSellerProfilePassword(fuelStation.stationId, oldPassword, newPassword)
+        .then(
+          (response) => {
+            toast.success(response.data.message);
+            navigate("../logout");
+          },
+          (error) => {
+            console.log(error);
+            toast.error(error.response.data.message);
+          }
+        );
     } catch (err) {
       console.log(err);
     }
   }
+
   return (
     <div
       className="w-[screen] h-screen flex flex-col justify-around items-center lg:md:flex-row"
@@ -57,16 +58,16 @@ function UpdateProfile(){
       <div className="w-[100%] text-white  h-[100%] justify-center gap-5 lg:w-1/3 items-center flex flex-col flex-wrap overflow-scroll">
         <div className="header">
           <h1 className="text-center text-[54px]">Change Passsword</h1>
-          <p>Please Fill in the old and new Passsword</p>
+          <p>Please Fill in the old and new Password</p>
         </div>
         <form class="w-full max-w-sm" onSubmit={onHandleSubmit}>
           <div class="gap-3 md:flex md:items-center mb-6 ">
-          <div class="md:w-2/3">
+            <div class="md:w-2/3">
               <label
                 class="block text-white font-bold md:text-right mb-1 md:mb-0 pr-4"
                 for="inline-currentPassword"
               >
-                Current Password 
+                Current Password
               </label>
             </div>
             <div class="mb-3 lg:mb-0">
@@ -77,20 +78,20 @@ function UpdateProfile(){
                 value={oldPassword}
                 required
                 minLength={8}
-                onChange={(e)=>{
-                    setOldPassword(e.target.value)
+                onChange={(e) => {
+                  setOldPassword(e.target.value);
                 }}
                 placeholder="Password"
               />
             </div>
           </div>
-     <div class="gap-3 md:flex md:items-center mb-6 ">
-     <div class="md:w-2/3">
+          <div class="gap-3 md:flex md:items-center mb-6 ">
+            <div class="md:w-2/3">
               <label
                 class="block text-white font-bold md:text-right mb-1 md:mb-0 pr-4"
                 for="inline-newPassword"
               >
-                New Passsword 
+                New Password
               </label>
             </div>
             <div class="">
@@ -101,21 +102,20 @@ function UpdateProfile(){
                 value={newPassword}
                 required
                 minLength={8}
-
-                onChange={(e)=>{
-                    setNewPassword(e.target.value)
+                onChange={(e) => {
+                  setNewPassword(e.target.value);
                 }}
                 placeholder="New Password"
               />
             </div>
           </div>
           <div class="gap-3 md:flex md:items-center mb-6 ">
-          <div class="md:w-2/3">
+            <div class="md:w-2/3">
               <label
                 class="block text-white font-bold md:text-right mb-1 md:mb-0 pr-4"
                 for="inline-confirm"
               >
-                Confirm  Passsword
+                Confirm Password
               </label>
             </div>
             <div class="">
@@ -126,8 +126,8 @@ function UpdateProfile(){
                 value={confirmPassowrd}
                 required
                 minLength={8}
-                onChange={(e)=>{
-                    setConfirmPassword(e.target.value)
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
                 }}
                 placeholder="Confirm Password"
               />
@@ -141,10 +141,10 @@ function UpdateProfile(){
             </button>
             <button
               className="bg-transparent border border-[#fe6f2b] w-full hover:bg-[#F59337] text-white font-bold py-2 px-4 rounded-full"
-              onClick={((e)=>{
+              onClick={(e) => {
                 e.preventDefault();
-                navigate('../')
-              })}
+                navigate('../');
+              }}
             >
               Cancel
             </button>
@@ -154,4 +154,5 @@ function UpdateProfile(){
     </div>
   );
 }
-export default UpdateProfile;
+
+module.exports = UpdateProfile;

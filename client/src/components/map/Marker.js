@@ -1,5 +1,5 @@
-import { func, number, oneOfType, string } from 'prop-types'
-import markerPin from '../../assets/images/marker-pin.png'
+const { func, number, oneOfType, string } = require('prop-types');
+const markerPin = require('../../assets/images/marker-pin.png');
 
 const Marker = ({ className, lat, lng, markerId, onClick, ...props }) => {
 	return (
@@ -40,4 +40,4 @@ Marker.propTypes = {
 	onClick: func,
 }
 
-export default Marker;
+module.exports = Marker;

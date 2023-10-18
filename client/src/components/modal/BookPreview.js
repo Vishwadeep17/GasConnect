@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import SimpleMap from "../map/Simple";
-import { BsFuelPump } from "react-icons/bs";
-import authService from "../../services/auth.service";
-import { getDistance } from "geolib";
-import OnlineScanner from "../../assets/images/qr.jpg";
+const React = require('react');
+const { useEffect, useState } = require('react');
+const SimpleMap = require('../map/Simple');
+const { BsFuelPump } = require('react-icons/bs');
+const authService = require('../../services/auth.service');
+const { getDistance } = require('geolib');
+const OnlineScanner = require('../../assets/images/qr.jpg');
+
 function BookPreview({
   order,
   setOnCancel,
@@ -34,14 +36,14 @@ function BookPreview({
 
   useEffect(() => {
     setTotalPrice(petrolPrice + dieselPrice + totalDeliveryCharge);
-  },[]);
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     setMethod({
-      cash : totalPrice
-    })
-  },[totalPrice])
-  
+      cash: totalPrice
+    });
+  }, [totalPrice]);
+
   return (
     <>
       <div className="justify-center h-full flex lg:my-10 md:my-10 overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -94,7 +96,7 @@ function BookPreview({
                         id="online"
                         type="radio"
                         value="online"
-                        checked={(method.online)?true : false}
+                        checked={method.online ? true : false}
                         name="method"
                         onChange={(e) => {
                           if (e.target.checked) {
@@ -116,7 +118,7 @@ function BookPreview({
                     </div>
                     <div class="flex  items-center pl-4 border rounded border-[#F59337] ">
                       <input
-                        checked={(method.cash)?true : false}
+                        checked={method.cash ? true : false}
                         id="cash"
                         type="radio"
                         value="cash"
@@ -124,9 +126,8 @@ function BookPreview({
                         onChange={(e) => {
                           if (e.target.checked) {
                             setMethod({
-                              cash: 
-                                totalPrice
-                              ,
+                              cash:
+                                totalPrice,
                             });
                           }
                         }}
@@ -192,4 +193,5 @@ function BookPreview({
     </>
   );
 }
-export default BookPreview;
+
+module.exports = BookPreview;
