@@ -1,5 +1,5 @@
-# Fuel Station Delivery App (MERN Stack)
-The Fuel Station Delivery App is a comprehensive application developed using the MERN (MongoDB, Express.js, React.js, Node.js) stack. It is designed to simplify and optimize the process of fuel delivery for fuel station owners and customers.
+# Gas Connect (MERN Stack)
+The Gas Connect App is a comprehensive application developed using the MERN (MongoDB, Express.js, React.js, Node.js) stack. It is designed to simplify and optimize the process of fuel delivery for fuel station owners and customers.
 
 ## Features
 - User Registration and Authentication: Users can create accounts, log in securely, and manage their profile information.
