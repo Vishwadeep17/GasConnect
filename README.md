@@ -42,6 +42,3 @@ Add the necessary environment variables, such as database connection details and
 8. Start the client:
 ```npm start```
 9. Open your web browser and access the application at http://localhost:3000.
-
-## License
-This project is licensed under the MIT License. By contributing to this project, you agree to license your contributions under the same license.
