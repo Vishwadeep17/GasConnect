@@ -16,9 +16,9 @@ The Gas Connect App is a comprehensive application developed using the MERN (Mon
 
 ## Getting Started
 1. Clone the repository:
-   ```git clone https://github.com/your-username/fuel-station-delivery-app.git```
+   ```git clone https://github.com/Vishwadeep17/GasConnect.git```
 2. Navigate to the project directory:
-   ```cd fuel-station-delivery-app```
+   ```cd GasConnect```
 3. Install dependencies for the server:
    ```bash 
    cd server
@@ -42,6 +42,3 @@ Add the necessary environment variables, such as database connection details and
 8. Start the client:
 ```npm start```
 9. Open your web browser and access the application at http://localhost:3000.
-
-## License
-This project is licensed under the MIT License. By contributing to this project, you agree to license your contributions under the same license.
