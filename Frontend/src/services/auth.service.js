@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const API_URL = "http://localhost:5000/";
+const API_URL = "https://gasconnect-production.up.railway.app/";
 
 const signup = (email, password,name,phone) => {
   return axios

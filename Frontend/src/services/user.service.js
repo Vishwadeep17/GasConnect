@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'localhost:5000/user/login';
+const API_URL = 'https://gasconnect-production.up.railway.app/user/login';
 
 class UserService {
   getPublicContent() {
