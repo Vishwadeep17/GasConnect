@@ -3,36 +3,31 @@ import { toast } from "react-toastify";
 
 const API_URL = "https://gasconnect-production.up.railway.app/";
 
-const signup = (email, password,name,phone) => {
-  return axios
+const signup = async (email, password,name,phone) => {
+  const response = await axios
     .post(API_URL + "user/signup", {
       email,
       password,
       name,
       phone
-    })
-    .then((response) => {
-      if (response.data.authtoken) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-      }
-
-      return response;
     });
+  if (response.data.authtoken) {
+    localStorage.setItem("user", JSON.stringify(response.data));
+  }
+  return response;
 };
 
-const login = (email, password) => {
-  return axios
+const login = async (email, password) => {
+  const response = await axios
     .post(API_URL + "user/login", {
       email,
       password,
-    })
-    .then((response) => {
-      console.log(response)
-      if (response.data.authtoken) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-      }
-      return response;
     });
+  console.log(response);
+  if (response.data.authtoken) {
+    localStorage.setItem("user", JSON.stringify(response.data));
+  }
+  return response;
 };
 
 const logout = () => {
@@ -43,36 +38,32 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
 
-const getUserInfo = (id) => {
-  return axios
-    .get(API_URL + `user/getUserInfo/${id}`)
-    .then((response) => {
-      console.log(response)
-      return response;
-    });
+const getUserInfo = async (id) => {
+  const response = await axios
+    .get(API_URL + `user/getUserInfo/${id}`);
+  console.log(response);
+  return response;
 };
 
 const getCurrentFuelStation = () => {
   return JSON.parse(localStorage.getItem("fuelStation"));
 };
 
-const fuelStationLogin = (email, password) => {
-  return axios
+const fuelStationLogin = async (email, password) => {
+  const response = await axios
     .post(API_URL + "fuel/login", {
       email,
       password
-    })
-    .then((response) => {
-      console.log(response)
-      if (response.data.token) {
-        localStorage.setItem("fuelStation", JSON.stringify(response.data));
-      }
-      return response;
     });
+  console.log(response);
+  if (response.data.token) {
+    localStorage.setItem("fuelStation", JSON.stringify(response.data));
+  }
+  return response;
 };
 
-const fuelStationRegister = (name,owner,email,password,phone,location) => {
-  return axios
+const fuelStationRegister = async (name,owner,email,password,phone,location) => {
+  const response = await axios
     .post(API_URL + "fuel/register", {
       name,
       owner,
@@ -80,124 +71,100 @@ const fuelStationRegister = (name,owner,email,password,phone,location) => {
       password,
       phone,
       location
-    })
-    .then((response) => {
-      if (response.data.token) {
-        localStorage.setItem("fuelStation", JSON.stringify(response.data));
-      }
-      return response;
     });
+  if (response.data.token) {
+    localStorage.setItem("fuelStation", JSON.stringify(response.data));
+  }
+  return response;
 };
 
-const fuelInventoryUpdate = (quantity,stationId) => {
-  return axios
+const fuelInventoryUpdate = async (quantity,stationId) => {
+  const response = await axios
     .put(API_URL + "fuel/updateFuel", {
-      quantity,stationId
-    })
-    .then((response) => {
-      console.log(response)
-      return response;
+      quantity, stationId
     });
+  console.log(response);
+  return response;
 };
 
 
-const getFuelStation = () => {
-  return axios
-    .get(API_URL + "fuel/getStations")
-    .then((response) => {
-      return response;
-    });
+const getFuelStation = async () => {
+  const response = await axios
+    .get(API_URL + "fuel/getStations");
+  return response;
 };
 
-const getFuelStationByID = (id) => {
-  return axios
-    .get(API_URL + `fuel/${id}`)
-    .then((response) => {
-      return response;
-    });
+const getFuelStationByID = async (id) => {
+  const response = await axios
+    .get(API_URL + `fuel/${id}`);
+  return response;
 };
 
-const postOrder = (userId,stationId,address,fuel,method) =>{
-  return axios
-  .post(API_URL + `order/`,{
-    userId,
-    stationId,
-    address,
-    fuel,
-    method
-  })
-  .then((response) => {
-    console.log(response)
-    return response;
-  });
+const postOrder = async (userId,stationId,address,fuel,method) =>{
+  const response = await axios
+    .post(API_URL + `order/`, {
+      userId,
+      stationId,
+      address,
+      fuel,
+      method
+    });
+  console.log(response);
+  return response;
 }
 
-const cancelOrder = (id) =>{
-  return axios
-  .put(API_URL + `order/cancel`,{
-    id
-  })
-  .then((response) => {
-    return response;
-  });
+const cancelOrder = async (id) =>{
+  const response = await axios
+    .put(API_URL + `order/cancel`, {
+      id
+    });
+  return response;
 }
 
-const acceptOrder = (id) =>{
-  return axios
-  .put(API_URL + `order/accept`,{
-    id
-  })
-  .then((response) => {
-    return response;
-  });
+const acceptOrder = async (id) =>{
+  const response = await axios
+    .put(API_URL + `order/accept`, {
+      id
+    });
+  return response;
 }
 
-const deliveryOrder = (id) =>{
-  return axios
-  .put(API_URL + `order/deliever`,{
-    id
-  })
-  .then((response) => {
-    return response;
-  });
+const deliveryOrder = async (id) =>{
+  const response = await axios
+    .put(API_URL + `order/deliever`, {
+      id
+    });
+  return response;
 }
 
-const getOrders = (id) =>{
-  return axios
-  .get(API_URL + `order/getOrderByFuelStationId/${id}`)
-  .then((response) => {
-    return response;
-  });
+const getOrders = async (id) =>{
+  const response = await axios
+    .get(API_URL + `order/getOrderByFuelStationId/${id}`);
+  return response;
 }
-const getUserOrders = (id) =>{
-  return axios
-  .get(API_URL + `order/getOrderByUserId/${id}`)
-  .then((response) => {
-    return response;
-  });
+const getUserOrders = async (id) =>{
+  const response = await axios
+    .get(API_URL + `order/getOrderByUserId/${id}`);
+  return response;
 }
-const updateProfilePassword = (userId,password,newPassword) =>{
-  return axios
-  .put(API_URL + `user/changePassword`,{
-    userId,
-    password,
-    newPassword
-  })
-  .then((response) => {
-    return response;
-  });
+const updateProfilePassword = async (userId,password,newPassword) =>{
+  const response = await axios
+    .put(API_URL + `user/changePassword`, {
+      userId,
+      password,
+      newPassword
+    });
+  return response;
 }
 
-const updateSellerProfilePassword = (stationId,password,newPassword) =>{
-  return axios
-  .put(API_URL + `fuel/changePassword`,{
-    stationId,
-    password,
-    newPassword
-  })
-  .then((response) => {
-    return response;
-  });
+const updateSellerProfilePassword = async (stationId,password,newPassword) =>{
+  const response = await axios
+    .put(API_URL + `fuel/changePassword`, {
+      stationId,
+      password,
+      newPassword
+    });
+  return response;
 }
 
 const loadScript = async(src="https://checkout.razorpay.com/v1/checkout.js")=>{
