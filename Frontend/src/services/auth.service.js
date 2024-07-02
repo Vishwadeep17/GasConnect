@@ -2,6 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const API_URL = "https://gasconnect-production.up.railway.app/";
+// const API_URL = "http://localhost:5000/";
 
 const signup = async (email, password,name,phone) => {
   const response = await axios

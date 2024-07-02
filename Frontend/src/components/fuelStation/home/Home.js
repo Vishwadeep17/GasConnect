@@ -10,10 +10,14 @@ import authService from "../../../services/auth.service";
 function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [gas, setGas] = useState("");
+  const [petrol, setPetrol] = useState("");
   const navigate = useNavigate();
   const fuelStation = AuthService.getCurrentFuelStation();
   const [pointer, setPointer] = useState(null);
   const [name, setName] = useState(null);
+
+
   const getResposne = async () => {
     try {
       await authService.getFuelStationByID(fuelStation.stationId).then(
@@ -21,6 +25,8 @@ function Home() {
           console.log(response);
           setName(response.data.name);
           setPointer(response.data.location);
+          setPetrol(response.data.quantity.petrol.quantity);
+          setGas(response.data.quantity.gas.quantity);
         },
         (error) => {
           console.log(error.response.data.message);
@@ -30,6 +36,7 @@ function Home() {
       console.log(err);
     }
   };
+  
 
   useEffect(() => {
     getResposne();
@@ -67,6 +74,14 @@ function Home() {
             <h1>{name}</h1>
           </div>
           <div className="flex flex-row justify-evenly items-center  gap-3 lg:flex-row flex-wrap lg:gap-5 lg:w-[100%] ">
+            <div className="bg-gray-800 p-5 rounded-lg shadow text-white">
+              <h2 className="text-xl font-bold">Petrol Quantity</h2>
+              <p>{petrol} liters</p>
+            </div>
+            <div className="bg-gray-800 p-5 rounded-lg shadow text-white">
+              <h2 className="text-xl font-bold">Gas Quantity</h2>
+              <p>{gas} Cylinders</p>
+            </div>
             <div>
               <Link
                 to="/seller/update-inventory"
